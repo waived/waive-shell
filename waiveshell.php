@@ -20,10 +20,6 @@
 // Layer7:
 //    http://www.example.com/waiveshell.php?type=http&host=www.site.com&port=80&time=300
 
-// Note: Parameter "time" is the duration of the attack in seconds.
-//       Waive DoS Shell accepts both domain names and IP addresses as a "host" parameter.
-//       It does NOT however handle entire URLs, ex: "http://www.something.com/index.html"
-
 // Use responsibly!
 
 //  _   _ ___  ___   ___ _              _ 
