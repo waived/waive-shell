@@ -44,11 +44,11 @@
             <option value="http">HTTP</option>
         </select><br><br>
         <label for="host"><b>HOST</b></label><br>
-        <input type="text" name="host" id="host" required placeholder="1.1.1.1/www..."><br><br>
+        <input type="text" name="host" id="host" required placeholder="1.1.1.1/www..." title="Target to slap"><br><br>
         <label for="port"><b>PORT</b></label><br>
-        <input type="number" name="port" id="port" required placeholder="80"><br><br>
+        <input type="number" name="port" id="port" required placeholder="80" title="Enter ZERO for UDP-wildcard port"><br><br>
         <label for="time"><b>SECONDS</b></label><br>
-        <input type="number" name="time" id="time" required placeholder="300"><br><br>
+        <input type="number" name="time" id="time" required placeholder="300" title="Done get crazy with this lol"><br><br>
         <button type="submit">Launch</button>
     </form><br>
     <?php
