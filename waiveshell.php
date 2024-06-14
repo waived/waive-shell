@@ -11,7 +11,6 @@
             font-family: monospace;
             background-color: black;
             color: skyblue;
-            cursor: none; /* Hide the default cursor */
         }        
         footer {
             background-color: black;
