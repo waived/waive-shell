@@ -90,7 +90,7 @@
 
     function _http($ip, $host, $port, $time) {
         $start_time = microtime(true);
-        $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nConnection: Keep-Alive\r\nKeep-Alive: timeout=5, max=1000\r\n\r\n";
+        $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nConnection: Keep-Alive\r\nKeep-Alive: timeout=5, max=1000\r\n\r\n";
         while ((microtime(true) - $start_time) < $time) {
             try {
                 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
