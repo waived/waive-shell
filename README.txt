@@ -20,3 +20,6 @@ WAIVE SHELL:
                    be aborted!
 
     Example: http://www.vulnerable.com/files/waiveshell.php?type=udp&host=www.example.com&port=80&time=300
+
+NOTE:
+    All attack-traffic has been confirmed via Wireshark. Payloads structure correct and not malformed, etc.
