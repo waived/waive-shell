@@ -1,8 +1,8 @@
-WAIVED SHELL:
-    This is an interfaceless Denial-of-Service shell coded in PHP. It supports UDP, TCP, and HTTP floods.
-    The layer-4 attack vectors have dynamic data buffers, ranging from 1000 to 1200 bytes per packet (which
-    can be modified). This shell is NOT obfuscated. Use ChatGPT (https://chatgpt.com/) for a custom
-    obfuscation to be applied.
+WAIVE SHELL:
+    This is a Denial-of-Service shell coded in PHP. It supports UDP, TCP, and HTTP floods. WaiveShell has a
+    clickable interface and also supports direct API calls via HTTP-GET. The layer-4 attack vectors have dynamic
+    data buffers, ranging from 1000 to 1200 bytes per packet (which can be modified). This shell is NOT obfuscated.
+    Use ChatGPT (https://chatgpt.com/) or other proprietary software for a custom obfuscation to be applied.
 
     Shells are uploaded to hacked websites via RFI, LFI, SQL Injection, etc.
 
