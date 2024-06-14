@@ -17,7 +17,7 @@ WAIVE SHELL:
     Example: http://www.vulnerable.com/files/waiveshell.php?type=udp&host=www.example.com&port=80&time=300
 
 LUCKY BOOTER:
-    Lucky Shell Booter is a program written in Visual Basic (built on .NET Framework 4.8.1). The user create a
+    Lucky Shell Booter is a program written in Visual Basic (built on .NET Framework 4.8.1). The user creates a
     .txt file. In this file should be each individual uploaded shell. Note: the shell URLs MUST end with 
     "waiveshell.php" for them to be considered valid. If not, they will be thrown out when loaded into the program.
 
